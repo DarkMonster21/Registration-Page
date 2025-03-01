@@ -217,12 +217,29 @@
             let confirmPassword = document.getElementById("confirmPassword").value;
             let loginBox = document.querySelector(".box");
 
+            // Check if any field is empty
             if (username === "" || email === "" || password === "" || confirmPassword === "") {
                 loginBox.classList.add("shake");
                 setTimeout(() => loginBox.classList.remove("shake"), 500);
+                alert("All fields are required!");
                 return;
             }
 
+            // Check for valid email format using regex
+            let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            // Password strength validation (at least 8 characters, one uppercase, one lowercase, one number)
+            let passwordStrengthRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordStrengthRegex.test(password)) {
+                alert("Password must be at least 8 characters long, with one uppercase letter, one lowercase letter, and one number.");
+                return;
+            }
+
+            // Check if password and confirm password match
             if (password !== confirmPassword) {
                 alert("Passwords do not match!");
                 return;
